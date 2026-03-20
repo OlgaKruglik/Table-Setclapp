@@ -1,0 +1,28 @@
+{
+  "table": {
+    "name": "Name",
+    "date": "Date",
+    "value": "Value",
+    "actions": "Actions"
+  },
+  "buttons": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "modal": {
+    "addTitle": "Add Row",
+    "editTitle": "Edit Row"
+  },
+  "search": {
+    "placeholder": "Search..."
+  },
+  "form": {
+    "name": "Name",
+    "date": "Date",
+    "value": "Value",
+    "required": "This field is required"
+  }
+}

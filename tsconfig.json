@@ -4,11 +4,11 @@
     "useDefineForClassFields": true,
     "lib": ["ESNext", "DOM"],
     "module": "ESNext",
-    "moduleResolution": "bundler",   // 🔥 ВАЖНО
+    "moduleResolution": "bundler", 
     "strict": true,
     "jsx": "react-jsx",
 
-    "esModuleInterop": true,         // 🔥 фикс path
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
     "skipLibCheck": true,
