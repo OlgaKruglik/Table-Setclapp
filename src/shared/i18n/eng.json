@@ -1,9 +1,10 @@
 {
   "table": {
     "name": "Name",
-    "date": "Date",
-    "value": "Value",
-    "actions": "Actions"
+    "date": "Date of birth",
+    "value": "Age",
+    "actions": "Actions",
+    "city": "City"
   },
   "buttons": {
     "add": "Add",
@@ -21,8 +22,9 @@
   },
   "form": {
     "name": "Name",
-    "date": "Date",
-    "value": "Value",
+    "date": "Date of birth",
+    "value": "Age",
+    "city": "City",
     "required": "This field is required"
   }
 }

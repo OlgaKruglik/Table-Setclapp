@@ -7,7 +7,7 @@ const { changeLang } = useTranslation();
 
   return (
     <div style={{ padding: 20 }}>
-      <Space style={{ marginBottom: 20 }}>
+      <Space style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20, gap: 8 }}>
         <Button onClick={() => changeLang("ru")}>🇷🇺 RU</Button>
         <Button onClick={() => changeLang("en")}>🇬🇧 EN</Button>
       </Space>

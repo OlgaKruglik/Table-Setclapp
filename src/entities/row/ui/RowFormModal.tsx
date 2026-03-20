@@ -1,35 +1,64 @@
 import { Modal, Form, Input, DatePicker, InputNumber } from "antd";
+import { useTranslation } from "@/shared/i18n";
+import { RowType } from "../model/types";
+import dayjs from "dayjs";
 
-export const RowFormModal = ({ open, onClose, onSubmit }: any) => {
+type Props = {
+  visible: boolean;
+  onCancel: () => void;
+  onSave: (row: RowType) => void;
+  initialValues?: RowType;
+};
+
+const fields = [
+  { name: "name", labelKey: "form.name", component: <Input /> },
+  { name: "date", labelKey: "form.date", component: <DatePicker style={{ width: "100%" }} /> },
+  { name: "value", labelKey: "form.value", component: <InputNumber style={{ width: "100%" }} /> },
+  { name: "city", labelKey: "form.city", component: <Input /> },
+];
+
+export const RowFormModal = ({ visible, onCancel, onSave, initialValues }: Props) => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const handleOk = async () => {
-    const values = await form.validateFields();
-
-    onSubmit({
-      id: Date.now().toString(),
-      ...values,
-      date: values.date.toISOString(),
+  const handleSave = () => {
+    form.validateFields().then(values => {
+      onSave({
+        id: initialValues?.id || Date.now().toString(),
+        ...values,
+        date: values.date.format("YYYY-MM-DD"),
+      });
+      form.resetFields();
     });
-
-    onClose();
-    form.resetFields();
   };
 
   return (
-    <Modal open={open} onOk={handleOk} onCancel={onClose}>
-      <Form form={form}>
-        <Form.Item name="name" rules={[{ required: true }]}>
-          <Input placeholder="Имя" />
-        </Form.Item>
-
-        <Form.Item name="date" rules={[{ required: true }]}>
-          <DatePicker style={{ width: "100%" }} />
-        </Form.Item>
-
-        <Form.Item name="value" rules={[{ required: true }]}>
-          <InputNumber style={{ width: "100%" }} />
-        </Form.Item>
+    <Modal
+      title={initialValues ? t("modal.editTitle") : t("modal.addTitle")}
+      open={visible}
+      onCancel={() => { form.resetFields(); onCancel(); }}
+      onOk={handleSave}
+      okText={t("buttons.save")}
+      cancelText={t("buttons.cancel")}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        initialValues={{
+          ...initialValues,
+          date: initialValues?.date ? dayjs(initialValues.date) : undefined,
+        }}
+      >
+        {fields.map(f => (
+          <Form.Item
+            key={f.name}
+            label={t(f.labelKey)}
+            name={f.name}
+            rules={[{ required: true, message: t("form.required") }]}
+          >
+            {f.component}
+          </Form.Item>
+        ))}
       </Form>
     </Modal>
   );
