@@ -12,8 +12,9 @@ type Props = {
 
 const fields = [
   { name: "name", labelKey: "form.name", component: <Input /> },
+  { name: "surname", labelKey: "form.surname", component: <Input /> },
   { name: "date", labelKey: "form.date", component: <DatePicker style={{ width: "100%" }} /> },
-  { name: "value", labelKey: "form.value", component: <InputNumber style={{ width: "100%" }} /> },
+  { name: "value", labelKey: "form.value", component: <InputNumber style={{ width: "100%" }} min={0}/> },
   { name: "city", labelKey: "form.city", component: <Input /> },
 ];
 

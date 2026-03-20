@@ -1,5 +1,6 @@
 import { Table, Button, Space } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { Filters } from "@/entities/row/ui/Filters";
 import { useTranslation } from "@/shared/i18n";
 import { RowType } from "@/entities/row/model/types";
 import { useState, useEffect } from "react";
@@ -11,6 +12,11 @@ export const TablePage = () => {
   const [rows, setRows] = useState<RowType[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [editingRow, setEditingRow] = useState<RowType | undefined>(undefined);
+  const [filters, setFilters] = useState({
+    name: "",
+    city: "",
+    date: null as string | null,
+  });
 
   useEffect(() => {
     const savedRows = localStorage.getItem("tableRows");
@@ -47,6 +53,7 @@ export const TablePage = () => {
 
   const columns: ColumnsType<RowType> = [
     { title: t("table.name"), dataIndex: "name", sorter: (a, b) => a.name.localeCompare(b.name) },
+    { title: t("table.surname"), dataIndex: "surname", sorter: (a, b) => a.surname.localeCompare(b.surname) },
     { title: t("table.date"), dataIndex: "date", sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime() },
     { title: t("table.value"), dataIndex: "value", sorter: (a, b) => a.value - b.value },
     { title: t("table.city"), dataIndex: "city", sorter: (a, b) => a.city.localeCompare(b.city) },
@@ -67,14 +74,31 @@ export const TablePage = () => {
       ),
     },
   ];
+  const filteredRows = rows.filter((row) => {
+    const matchName =
+      !filters.name ||
+      row.name.toLowerCase().includes(filters.name.toLowerCase());
+
+    const matchCity =
+      !filters.city ||
+      row.city.toLowerCase().includes(filters.city.toLowerCase());
+
+    const matchDate =
+      !filters.date || row.date === filters.date;
+
+    return matchName && matchCity && matchDate;
+  });
 
   return (
     <div>
-      <Button type="primary" style={{ marginBottom: 16 }} onClick={handleAdd}>
-        {t("buttons.add")}
-      </Button>
+      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+        <Button type="primary" style={{ marginBottom: 16 }} onClick={handleAdd}>
+          {t("buttons.add")}
+        </Button>
+        <Filters filters={filters} onChange={setFilters} />
+      </div>
 
-      <Table rowKey="id" columns={columns} dataSource={rows} />
+      <Table rowKey="id" columns={columns} dataSource={filteredRows} />
 
       <RowFormModal
         visible={modalVisible}

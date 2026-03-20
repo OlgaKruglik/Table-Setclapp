@@ -2,7 +2,8 @@
   "table": {
     "name": "Name",
     "date": "Date of birth",
-    "value": "Age",
+    "surname": "Surname",
+    "value": "Number of orders",
     "actions": "Actions",
     "city": "City"
   },
@@ -22,8 +23,9 @@
   },
   "form": {
     "name": "Name",
+    "surname": "Surname",
     "date": "Date of birth",
-    "value": "Age",
+    "value": "Number of orders",
     "city": "City",
     "required": "This field is required"
   }
