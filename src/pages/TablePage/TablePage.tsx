@@ -20,7 +20,21 @@ export const TablePage = () => {
 
   useEffect(() => {
     const savedRows = localStorage.getItem("tableRows");
-    if (savedRows) setRows(JSON.parse(savedRows));
+    if (savedRows) {
+      try {
+        const parsed = JSON.parse(savedRows);
+        if (Array.isArray(parsed)) {
+          setRows(parsed);
+        } else {
+          setRows([]);
+        }
+      } catch (e) {
+        console.error("Ошибка парсинга localStorage:", e);
+        setRows([]);
+      }
+    } else {
+      setRows([]); 
+    }
   }, []);
 
   const handleAdd = () => {
