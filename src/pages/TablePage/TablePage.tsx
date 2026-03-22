@@ -105,14 +105,35 @@ export const TablePage = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        <Button type="primary" style={{ marginBottom: 16 }} onClick={handleAdd}>
+      <style>{`
+        @media (max-width: 768px) {
+          .table-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+          }
+          .table-header button {
+            width: 100%;
+          }
+        }
+      `}</style>
+
+      <div className="table-header" style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+        <Button type="primary" onClick={handleAdd}>
           {t("buttons.add")}
         </Button>
+
         <Filters filters={filters} onChange={setFilters} />
       </div>
 
-      <Table rowKey="id" columns={columns} dataSource={filteredRows} />
+      <div style={{ overflowX: "auto" }}>
+        <Table
+          rowKey="id"
+          columns={columns}
+          dataSource={filteredRows}
+          scroll={{ x: "max-content" }}
+        />
+      </div>
 
       <RowFormModal
         visible={modalVisible}
